@@ -1,0 +1,665 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css">
+        <link rel="stylesheet" href="css/qgis2web.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title>Property Identification</title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/AuleRoadNetwork_0.js"></script>
+        <script src="data/Aule_Building_1.js"></script>
+        <script src="data/AlagbakaRoadNetwork_2.js"></script>
+        <script src="data/Alagbaka_Building_3.js"></script>
+        <script>
+        var highlightLayer;
+        function highlightFeature(e) {
+            highlightLayer = e.target;
+
+            if (e.target.feature.geometry.type === 'LineString') {
+              highlightLayer.setStyle({
+                color: '#ffff00',
+              });
+            } else {
+              highlightLayer.setStyle({
+                fillColor: '#ffff00',
+                fillOpacity: 1
+              });
+            }
+            highlightLayer.openPopup();
+        }
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:6
+        }).fitBounds([[7.27742327494,5.1355321847],[7.28334696526,5.14210113414]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        var bounds_group = new L.featureGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        function setBounds() {
+        }
+        function pop_AuleRoadNetwork_0(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['highway'] !== null ? Autolinker.link(String(feature.properties['highway'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['z_order'] !== null ? Autolinker.link(String(feature.properties['z_order'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['other_tags'] !== null ? Autolinker.link(String(feature.properties['other_tags'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Road_Type'] !== null ? Autolinker.link(String(feature.properties['Road_Type'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SpeedLimit'] !== null ? Autolinker.link(String(feature.properties['SpeedLimit'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AuleRoadNetwork_0_0(feature) {
+            switch(String(feature.properties['Road_Type'])) {
+                case 'Close':
+                    return {
+                pane: 'pane_AuleRoadNetwork_0',
+                opacity: 1,
+                color: 'rgba(101,239,136,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Road':
+                    return {
+                pane: 'pane_AuleRoadNetwork_0',
+                opacity: 1,
+                color: 'rgba(168,66,223,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Street':
+                    return {
+                pane: 'pane_AuleRoadNetwork_0',
+                opacity: 1,
+                color: 'rgba(62,138,200,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Unclassified':
+                    return {
+                pane: 'pane_AuleRoadNetwork_0',
+                opacity: 1,
+                color: 'rgba(240,140,155,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_AuleRoadNetwork_0');
+        map.getPane('pane_AuleRoadNetwork_0').style.zIndex = 400;
+        map.getPane('pane_AuleRoadNetwork_0').style['mix-blend-mode'] = 'normal';
+        var layer_AuleRoadNetwork_0 = new L.geoJson(json_AuleRoadNetwork_0, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_AuleRoadNetwork_0',
+            onEachFeature: pop_AuleRoadNetwork_0,
+            style: style_AuleRoadNetwork_0_0,
+        });
+        bounds_group.addLayer(layer_AuleRoadNetwork_0);
+        map.addLayer(layer_AuleRoadNetwork_0);
+        function pop_Aule_Building_1(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['building'] !== null ? Autolinker.link(String(feature.properties['building'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BDG_Name'] !== null ? Autolinker.link(String(feature.properties['BDG_Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BDG_Type'] !== null ? Autolinker.link(String(feature.properties['BDG_Type'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BDG_Class'] !== null ? Autolinker.link(String(feature.properties['BDG_Class'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Street'] !== null ? Autolinker.link(String(feature.properties['Street'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Local_Govt'] !== null ? Autolinker.link(String(feature.properties['Local_Govt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['State'] !== null ? Autolinker.link(String(feature.properties['State'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['BDG_Floors'] !== null ? Autolinker.link(String(feature.properties['BDG_Floors'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Country'] !== null ? Autolinker.link(String(feature.properties['Country'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id_Numbers'] !== null ? Autolinker.link(String(feature.properties['id_Numbers'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Area_Class'] !== null ? Autolinker.link(String(feature.properties['Area_Class'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Aule_Building_1_0(feature) {
+            switch(String(feature.properties['BDG_Class'])) {
+                case 'Commercial':
+                    return {
+                pane: 'pane_Aule_Building_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(142,173,240,1.0)',
+            }
+                    break;
+                case 'Education':
+                    return {
+                pane: 'pane_Aule_Building_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(207,48,176,1.0)',
+            }
+                    break;
+                case 'Health Center':
+                    return {
+                pane: 'pane_Aule_Building_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(147,102,205,1.0)',
+            }
+                    break;
+                case 'Industrial':
+                    return {
+                pane: 'pane_Aule_Building_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(231,178,53,1.0)',
+            }
+                    break;
+                case 'Religious':
+                    return {
+                pane: 'pane_Aule_Building_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(25,207,61,1.0)',
+            }
+                    break;
+                case 'Residential':
+                    return {
+                pane: 'pane_Aule_Building_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,79,86,1.0)',
+            }
+                    break;
+                case 'Unclassified':
+                    return {
+                pane: 'pane_Aule_Building_1',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(186,231,130,1.0)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Aule_Building_1');
+        map.getPane('pane_Aule_Building_1').style.zIndex = 401;
+        map.getPane('pane_Aule_Building_1').style['mix-blend-mode'] = 'normal';
+        var layer_Aule_Building_1 = new L.geoJson(json_Aule_Building_1, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_Aule_Building_1',
+            onEachFeature: pop_Aule_Building_1,
+            style: style_Aule_Building_1_0,
+        });
+        bounds_group.addLayer(layer_Aule_Building_1);
+        map.addLayer(layer_Aule_Building_1);
+        function pop_AlagbakaRoadNetwork_2(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['name'] !== null ? Autolinker.link(String(feature.properties['name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['highway'] !== null ? Autolinker.link(String(feature.properties['highway'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['z_order'] !== null ? Autolinker.link(String(feature.properties['z_order'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['other_tags'] !== null ? Autolinker.link(String(feature.properties['other_tags'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Road_Type'] !== null ? Autolinker.link(String(feature.properties['Road_Type'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SpeedLimit'] !== null ? Autolinker.link(String(feature.properties['SpeedLimit'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_AlagbakaRoadNetwork_2_0(feature) {
+            switch(String(feature.properties['Road_Type'])) {
+                case 'Path':
+                    return {
+                pane: 'pane_AlagbakaRoadNetwork_2',
+                opacity: 1,
+                color: 'rgba(100,223,182,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Road':
+                    return {
+                pane: 'pane_AlagbakaRoadNetwork_2',
+                opacity: 1,
+                color: 'rgba(222,131,218,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Street':
+                    return {
+                pane: 'pane_AlagbakaRoadNetwork_2',
+                opacity: 1,
+                color: 'rgba(158,228,78,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+                case 'Unclassified':
+                    return {
+                pane: 'pane_AlagbakaRoadNetwork_2',
+                opacity: 1,
+                color: 'rgba(231,115,77,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 1.0,
+                fillOpacity: 0,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_AlagbakaRoadNetwork_2');
+        map.getPane('pane_AlagbakaRoadNetwork_2').style.zIndex = 402;
+        map.getPane('pane_AlagbakaRoadNetwork_2').style['mix-blend-mode'] = 'normal';
+        var layer_AlagbakaRoadNetwork_2 = new L.geoJson(json_AlagbakaRoadNetwork_2, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_AlagbakaRoadNetwork_2',
+            onEachFeature: pop_AlagbakaRoadNetwork_2,
+            style: style_AlagbakaRoadNetwork_2_0,
+        });
+        bounds_group.addLayer(layer_AlagbakaRoadNetwork_2);
+        map.addLayer(layer_AlagbakaRoadNetwork_2);
+        function pop_Alagbaka_Building_3(feature, layer) {
+            layer.on({
+                mouseout: function(e) {
+                    for (i in e.target._eventParents) {
+                        e.target._eventParents[i].resetStyle(e.target);
+                    }
+                    if (typeof layer.closePopup == 'function') {
+                        layer.closePopup();
+                    } else {
+                        layer.eachLayer(function(feature){
+                            feature.closePopup()
+                        });
+                    }
+                },
+                mouseover: highlightFeature,
+            });
+            var popupContent = '<table>\
+                    <tr>\
+                        <th scope="row">building</th>\
+                        <td>' + (feature.properties['building'] !== null ? Autolinker.link(String(feature.properties['building'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">ID_numbers</th>\
+                        <td>' + (feature.properties['ID_numbers'] !== null ? Autolinker.link(String(feature.properties['ID_numbers'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Building Name</th>\
+                        <td>' + (feature.properties['BDG_Name'] !== null ? Autolinker.link(String(feature.properties['BDG_Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Building Type</th>\
+                        <td>' + (feature.properties['BDG_Type'] !== null ? Autolinker.link(String(feature.properties['BDG_Type'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Building Class</th>\
+                        <td>' + (feature.properties['BDG_Class'] !== null ? Autolinker.link(String(feature.properties['BDG_Class'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Road Name</th>\
+                        <td>' + (feature.properties['Street'] !== null ? Autolinker.link(String(feature.properties['Street'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Building Floor</th>\
+                        <td>' + (feature.properties['BDG_Floors'] !== null ? Autolinker.link(String(feature.properties['BDG_Floors'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Local Government</th>\
+                        <td>' + (feature.properties['Local_Govt'] !== null ? Autolinker.link(String(feature.properties['Local_Govt'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">State</th>\
+                        <td>' + (feature.properties['State'] !== null ? Autolinker.link(String(feature.properties['State'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Country</th>\
+                        <td>' + (feature.properties['Country'] !== null ? Autolinker.link(String(feature.properties['Country'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Area_Class'] !== null ? Autolinker.link(String(feature.properties['Area_Class'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Alagbaka_Building_3_0(feature) {
+            switch(String(feature.properties['BDG_Class'])) {
+                case 'Agriculture':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(202,69,125,1.0)',
+            }
+                    break;
+                case 'Commercial':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(206,48,208,1.0)',
+            }
+                    break;
+                case 'Education':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(40,205,34,1.0)',
+            }
+                    break;
+                case 'Government':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(129,67,227,1.0)',
+            }
+                    break;
+                case 'Govt Buildings':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(238,216,143,1.0)',
+            }
+                    break;
+                case 'Industry':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(69,194,219,1.0)',
+            }
+                    break;
+                case 'Recreational':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(120,146,238,1.0)',
+            }
+                    break;
+                case 'Religious':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(170,227,72,1.0)',
+            }
+                    break;
+                case 'Residential':
+                    return {
+                pane: 'pane_Alagbaka_Building_3',
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(206,94,69,1.0)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_Alagbaka_Building_3');
+        map.getPane('pane_Alagbaka_Building_3').style.zIndex = 403;
+        map.getPane('pane_Alagbaka_Building_3').style['mix-blend-mode'] = 'normal';
+        var layer_Alagbaka_Building_3 = new L.geoJson(json_Alagbaka_Building_3, {
+            attribution: '<a href=""></a>',
+            pane: 'pane_Alagbaka_Building_3',
+            onEachFeature: pop_Alagbaka_Building_3,
+            style: style_Alagbaka_Building_3_0,
+        });
+        bounds_group.addLayer(layer_Alagbaka_Building_3);
+        map.addLayer(layer_Alagbaka_Building_3);
+        var title = new L.Control();
+        title.onAdd = function (map) {
+            this._div = L.DomUtil.create('div', 'info');
+            this.update();
+            return this._div;
+        };
+        title.update = function () {
+            this._div.innerHTML = '<h2>Property Identification</h2>';
+        };
+        title.addTo(map);
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Alagbaka_Building<br /><table><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Agriculture0.png" /></td><td>Agriculture</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Commercial1.png" /></td><td>Commercial</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Education2.png" /></td><td>Education</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Government3.png" /></td><td>Government</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_GovtBuildings4.png" /></td><td>Govt Buildings</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Industry5.png" /></td><td>Industry</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Recreational6.png" /></td><td>Recreational</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Religious7.png" /></td><td>Religious</td></tr><tr><td style="text-align: center;"><img src="legend/Alagbaka_Building_3_Residential8.png" /></td><td>Residential</td></tr></table>': layer_Alagbaka_Building_3,'Alagbaka Road Network<br /><table><tr><td style="text-align: center;"><img src="legend/AlagbakaRoadNetwork_2_Path0.png" /></td><td>Path</td></tr><tr><td style="text-align: center;"><img src="legend/AlagbakaRoadNetwork_2_Road1.png" /></td><td>Road</td></tr><tr><td style="text-align: center;"><img src="legend/AlagbakaRoadNetwork_2_Street2.png" /></td><td>Street</td></tr><tr><td style="text-align: center;"><img src="legend/AlagbakaRoadNetwork_2_Unclassified3.png" /></td><td>Unclassified</td></tr></table>': layer_AlagbakaRoadNetwork_2,'Aule_Building<br /><table><tr><td style="text-align: center;"><img src="legend/Aule_Building_1_Commercial0.png" /></td><td>Commercial</td></tr><tr><td style="text-align: center;"><img src="legend/Aule_Building_1_Education1.png" /></td><td>Education</td></tr><tr><td style="text-align: center;"><img src="legend/Aule_Building_1_HealthCenter2.png" /></td><td>Health Center</td></tr><tr><td style="text-align: center;"><img src="legend/Aule_Building_1_Industrial3.png" /></td><td>Industrial</td></tr><tr><td style="text-align: center;"><img src="legend/Aule_Building_1_Religious4.png" /></td><td>Religious</td></tr><tr><td style="text-align: center;"><img src="legend/Aule_Building_1_Residential5.png" /></td><td>Residential</td></tr><tr><td style="text-align: center;"><img src="legend/Aule_Building_1_Unclassified6.png" /></td><td>Unclassified</td></tr></table>': layer_Aule_Building_1,'Aule Road Network<br /><table><tr><td style="text-align: center;"><img src="legend/AuleRoadNetwork_0_Close0.png" /></td><td>Close</td></tr><tr><td style="text-align: center;"><img src="legend/AuleRoadNetwork_0_Road1.png" /></td><td>Road</td></tr><tr><td style="text-align: center;"><img src="legend/AuleRoadNetwork_0_Street2.png" /></td><td>Street</td></tr><tr><td style="text-align: center;"><img src="legend/AuleRoadNetwork_0_Unclassified3.png" /></td><td>Unclassified</td></tr></table>': layer_AuleRoadNetwork_0,}).addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_Aule_Building_1,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'id_Numbers'}));
+        </script>
+    </body>
+</html>

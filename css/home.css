@@ -1,0 +1,98 @@
+/*  import google fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap');
+
+.home {
+  min-height: 100vh;
+  background-image: url("../img/hero.png");
+  background-size: cover;
+  background-position: center;
+  padding: 15px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.full-screen {
+  min-height: 100vh;
+}
+
+.home-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex: 0 0 100%;
+  max-width: 100%;
+}
+
+.block {
+  flex: 0 0 75%;
+  max-width: 75%;
+  color: rgb(236, 241, 250);
+  padding-left: 35px;
+  border-left: 3px solid rgb(236, 241, 250);
+  margin-top: 50px;
+}
+
+.block h1 {
+  font-size: 70px;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+}
+
+.block h3 {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.block h3 span {
+  font-size: 30px;
+  font-weight: 500;
+  color: rgb(0, 255, 98);
+}
+
+.text-3 {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.home-content .block .text-3 span {
+  color: rgb(0, 255, 98);
+  font-size: 30px;
+  font-weight: 500;
+}
+
+.block h6 {
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.cv-btn {
+  padding-top: 20px;
+}
+
+.cv-btn a {
+  font-size: 14px;
+  color: rgb(236, 241, 250);
+  background-color: transparent;
+  border: 1px solid rgb(236, 241, 250);
+  border-radius: 4px;
+  padding: 12px 25px;
+  display: inline-block;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.cv-btn a:hover {
+  background-color: #fff;
+  color: #000;
+}
